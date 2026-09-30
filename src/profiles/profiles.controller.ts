@@ -1,13 +1,17 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query } from '@nestjs/common';
 import { CreateProfileDto } from './dto/create-profile.dto.js';
 import { UpdateProfileDto } from './dto/update-profile.dt.js';
+import { ProfilesService } from './profiles.service.js';
 
 // Routes the request to the appropriate handler
 @Controller('profiles')
 export class ProfilesController {
+    constructor(private readonly profilesService: ProfilesService) {
+        
+    }
     @Get()
     getAll(@Query('name') name: string, @Query('description') description: string) {
-        return [{ name, description }];
+        return this.profilesService.findAll();
     }
 
     @Get(':id')
