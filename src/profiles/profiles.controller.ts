@@ -1,11 +1,11 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, InternalServerErrorException, NotFoundException, Param, ParseUUIDPipe, Post, Put, Query, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, InternalServerErrorException, NotFoundException, Param, ParseUUIDPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { CreateProfileDto } from './dto/create-profile.dto.js';
 import { UpdateProfileDto } from './dto/update-profile.dt.js';
 import { ProfilesService } from './profiles.service.js';
 import type { UUID } from 'node:crypto';
-
+import { ProfilesGuard } from './profiles.guard.js';
 // Routes the request to the appropriate handler
-@Controller('profiles')
+@Controller('profiles')//Decorators are high order functions that take a class and return a new class
 export class ProfilesController {
     constructor(private readonly profilesService: ProfilesService) {
         
@@ -47,6 +47,7 @@ export class ProfilesController {
     //DELETE /profiles/:id
     @Delete(':id')
     @HttpCode(HttpStatus.NO_CONTENT)
+    @UseGuards(ProfilesGuard)
     delete(@Param('id', ParseUUIDPipe) id: UUID) {
         try {   
             this.profilesService.delete(id);

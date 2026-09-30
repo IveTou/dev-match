@@ -1,6 +1,8 @@
 npx @nestjs/cli generate module profiles
 npx @nestjs/cli generate controller profiles
 npx @nestjs/cli generate service profiles
+npx @nestjs/cli generate guard profiles
+
 
 Controller for routing - What to do
 Service for most of business logic - How to do it
@@ -10,3 +12,6 @@ PUT -> updates entire resource
 PATH -> partial update
 201- created
 204 - delete
+
+403 - Forbidden
+404 - Not found 
