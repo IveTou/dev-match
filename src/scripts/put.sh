@@ -1,4 +1,5 @@
 #! /bin/bash
 
-curl -X PUT http://localhost:3000/profiles/99966a6c-ccbf-42a9-8789-94ea1a6dd274 \
+curl -X PUT http://localhost:3000/profiles/c3dfc31f-dad7-4f66-82d3-882927c43641 \
+-H "Content-Type: application/json" \
 -d '{"name": "Modified Doe", "description": "I am a software developer"}'
