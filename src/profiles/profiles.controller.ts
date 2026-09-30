@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, Query } from '@nestjs/common';
 import { CreateProfileDto } from './dto/create-profile.dto.js';
 import { UpdateProfileDto } from './dto/update-profile.dt.js';
 import { ProfilesService } from './profiles.service.js';
@@ -30,23 +30,13 @@ export class ProfilesController {
     //PUT /profiles/:id
     @Put(':id')
     update(@Param('id') id: string, @Body() updateProfileDto: UpdateProfileDto) {
-        try {
-            return this.profilesService.update(id, updateProfileDto);
-        } catch (error: any) {
-            console.error(`Error updating profile ${id}:`, error);
-            return { error: 'Failed to update profile', statusCode: error.status, message: error.message };
-        }
-      
+        return this.profilesService.update(id, updateProfileDto);
     }
 
     //DELETE /profiles/:id
     @Delete(':id')
-    @HttpCode(204)
+    @HttpCode(HttpStatus.NO_CONTENT)
     delete(@Param('id') id: string) {
-        try {
-            this.profilesService.delete(id);
-        } catch (error: any) {
-            console.error(`Error deleting profile ${id}:`, error);
-        }
+        this.profilesService.delete(id);
     }
 }

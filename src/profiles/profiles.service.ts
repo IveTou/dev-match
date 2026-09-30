@@ -31,7 +31,12 @@ export class ProfilesService {
 
     // Find a profile by its ID
     findById(id: string) {
-        return this.profiles.find((profile) => profile.id === id);
+        const matchedProfile = this.profiles.find(profile => profile.id === id);
+        if (!matchedProfile) {
+            //On larger projects it's cleaner le the controller handle the error and decide which HTTP exception to throw
+            throw new NotFoundException(`Profile with ID ${id} not found`);
+        }
+        return matchedProfile;
     }
 
     create(profile: CreateProfileDto) {  // Profile is a DTO object
@@ -46,7 +51,7 @@ export class ProfilesService {
     update(id: string, profile: UpdateProfileDto) {
         const index = this.profiles.findIndex((profile) => profile.id === id);
         if (index === -1) {
-            throw new NotFoundException('Profile not found');
+            throw new NotFoundException(`Profile with ID ${id} not found`);
         }
         this.profiles[index] = {
             ...this.profiles[index],
@@ -61,6 +66,5 @@ export class ProfilesService {
             throw new NotFoundException('Profile not found');
         }
         this.profiles.splice(index, 1);
-        return { message: 'Profile deleted successfully' };
     }
 }
