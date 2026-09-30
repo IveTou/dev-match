@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query } from '@nestjs/common';
 import { CreateProfileDto } from './dto/create-profile.dto.js';
+import { UpdateProfileDto } from './dto/update-profile.dt.js';
 
 // Routes the request to the appropriate handler
 @Controller('profiles')
@@ -22,5 +23,21 @@ export class ProfilesController {
         };
         //return the DTO object
         //return createProfileDto;
+    }
+
+    @Put(':id')
+    update(@Param('id') id: string, @Body() updateProfileDto: UpdateProfileDto) {
+        return {
+            id,
+            ...updateProfileDto,
+        };
+    }
+
+    @Delete(':id')
+    @HttpCode(204)
+    delete(@Param('id') id: string) {
+        return {
+            id,
+        };
     }
 }

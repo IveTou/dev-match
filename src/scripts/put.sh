@@ -1,0 +1,5 @@
+#! /bin/bash
+
+curl -X PUT http://localhost:3000/profiles/1 \
+-H "Content-Type: application/json" \
+-d '{"name": "John Doe", "description": "I am a software engineer"}'
