@@ -34,7 +34,7 @@ export class ProfilesService {
         const matchedProfile = this.profiles.find(profile => profile.id === id);
         if (!matchedProfile) {
             //On larger projects it's cleaner le the controller handle the error and decide which HTTP exception to throw
-            throw new NotFoundException(`Profile with ID ${id} not found`);
+            throw new Error(`Profile with ID ${id} not found`);
         }
         return matchedProfile;
     }
@@ -51,7 +51,7 @@ export class ProfilesService {
     update(id: string, profile: UpdateProfileDto) {
         const index = this.profiles.findIndex((profile) => profile.id === id);
         if (index === -1) {
-            throw new NotFoundException(`Profile with ID ${id} not found`);
+            throw new Error(`Profile with ID ${id} not found`);
         }
         this.profiles[index] = {
             ...this.profiles[index],
@@ -63,7 +63,7 @@ export class ProfilesService {
     delete(id: string) {
         const index = this.profiles.findIndex((profile) => profile.id === id);
         if (index === -1) {
-            throw new NotFoundException('Profile not found');
+            throw new Error('Profile not found');
         }
         this.profiles.splice(index, 1);
     }
