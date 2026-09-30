@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
 import type{ CreateProfileDto } from './dto/create-profile.dto.js';
+import { UpdateProfileDto } from './dto/update-profile.dt.js';
 // @Injectable() Enables our service to create a instance of the service or reuse it in other parts of the application
 //You don't need to create a instance of the service, it will be created automatically by the NestJS framework.
 @Injectable()
@@ -40,5 +41,26 @@ export class ProfilesService {
         };
         this.profiles.push(newProfile);
         return newProfile;
+    }
+
+    update(id: string, profile: UpdateProfileDto) {
+        const index = this.profiles.findIndex((profile) => profile.id === id);
+        if (index === -1) {
+            throw new NotFoundException('Profile not found');
+        }
+        this.profiles[index] = {
+            ...this.profiles[index],
+            ...profile,
+        };
+        return this.profiles[index];
+    }
+
+    delete(id: string) {
+        const index = this.profiles.findIndex((profile) => profile.id === id);
+        if (index === -1) {
+            throw new NotFoundException('Profile not found');
+        }
+        this.profiles.splice(index, 1);
+        return { message: 'Profile deleted successfully' };
     }
 }

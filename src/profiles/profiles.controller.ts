@@ -30,17 +30,23 @@ export class ProfilesController {
     //PUT /profiles/:id
     @Put(':id')
     update(@Param('id') id: string, @Body() updateProfileDto: UpdateProfileDto) {
-        return {
-            id,
-            ...updateProfileDto,
-        };
+        try {
+            return this.profilesService.update(id, updateProfileDto);
+        } catch (error: any) {
+            console.error(`Error updating profile ${id}:`, error);
+            return { error: 'Failed to update profile', statusCode: error.status, message: error.message };
+        }
+      
     }
 
+    //DELETE /profiles/:id
     @Delete(':id')
     @HttpCode(204)
     delete(@Param('id') id: string) {
-        return {
-            id,
-        };
+        try {
+            this.profilesService.delete(id);
+        } catch (error: any) {
+            console.error(`Error deleting profile ${id}:`, error);
+        }
     }
 }
