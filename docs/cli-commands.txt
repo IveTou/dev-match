@@ -1,0 +1,1 @@
+npx @nestjs/cli generate module profiles
