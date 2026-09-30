@@ -9,26 +9,25 @@ export class ProfilesController {
     constructor(private readonly profilesService: ProfilesService) {
         
     }
+    //GET /profiles
     @Get()
     getAll(@Query('name') name: string, @Query('description') description: string) {
         return this.profilesService.findAll();
     }
 
+    //GET /profiles/:id
     @Get(':id')
     getById(@Param('id') id: string) {
-        return { id } ;
+        return this.profilesService.findById(id);
     }
 
+    //POST /profiles
     @Post()
     create(@Body() createProfileDto: CreateProfileDto) {
-        return {
-            name: createProfileDto.name,
-            description: createProfileDto.description,
-        };
-        //return the DTO object
-        //return createProfileDto;
+        return this.profilesService.create(createProfileDto);
     }
 
+    //PUT /profiles/:id
     @Put(':id')
     update(@Param('id') id: string, @Body() updateProfileDto: UpdateProfileDto) {
         return {
